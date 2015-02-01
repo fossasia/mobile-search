@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<!--
+The MIT License (MIT)
+
+Copyright (c) 2015 FOSSASIA
+Copyright (c) 2015 Tymon Radzik
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-->
+<html>
+
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, initial-scale=1, width=device-width, height=device-height" />
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+
+        <title>Offline Mobile Reader</title>
+    </head>
+
+    <body style="font-size: 1em">
+
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mainNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Mobile reader</a>
+                </div>
+                <div class="collapse navbar-collapse" id="mainNavbar">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="index.html">Start</a></li>
+                        <li><a href="about.html">About</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">
+            <div class="row col-md-12">
+                <h2>Welcome to Mobile Reader app!</h2><br/>
+                <p><b>Current directory:</b><span id="dirPath"></span></p>
+                <input type="button" style="width:100%" class="btn btn-info" id="changePath" value="Change path" />
+            </div>
+            <hr/>
+            <div class="row col-md-12">
+                <span style="color: red" id="errorMsg"></span><br/>
+                Search for phrase: <input id="searchP" class="form-control" type="text" /><br/>
+                <input type="button" style="width: 100%" class="btn btn-default" value="Search!" id="searchBtn" />
+            </div>
+            <hr/>
+            <div class="row col-md-12">
+                <h3>Categories:</h3>
+                <div id="categories">
+
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="js/jquery.js"></script>
+        <script type="text/javascript" src="js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script src="lib/fastclick.js"></script>
+    </body>
+
+</html>

@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.radzik.mobilereader" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>MobileReader</name>
+    <description>
+        Application, which could be used to look-up for given text in all files in user-selected directory.
+    </description>
+    <preference name="EnableViewportScale" value="true" />
+    <author email="dwgipk@gmail.com" href="https://github.com/fossasia/mobile-search">
+        Tymon Radzik and contributors
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+</widget>

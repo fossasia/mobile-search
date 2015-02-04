@@ -104,7 +104,6 @@ function getCategories() {
     if(!keyExists("searchPath") || getCallerId() != "index.html")return;
     window.resolveLocalFileSystemURL(storage.getItem("searchPath"), function(dirLoc){
         if(!dirLoc.isDirectory)return;
-        window.alert("Szajs");
        var catReader = dirLoc.createReader();
         catReader.readEntries(function(categories){
             document.getElementById("categoriesUl").innerHTML += "<li class=\"list-group-item\"><input type=\"checkbox\" checked=\"checked\" id='[top]' value='[top]' name='[top]'>[top]</input></li>";

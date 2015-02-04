@@ -96,6 +96,29 @@ function picker_listDir(dirEntry) {
 
 //
 
+//---
+//---
+//---
+
+function getCategories() {
+    if(!keyExists("searchPath") || getCallerId() != "index.html")return;
+    window.resolveLocalFileSystemURL(storage.getItem("searchPath"), function(dirLoc){
+        if(!dirLoc.isDirectory)return;
+        window.alert("Szajs");
+       var catReader = dirLoc.createReader();
+        catReader.readEntries(function(categories){
+            document.getElementById("categoriesUl").innerHTML += "<li class=\"list-group-item\"><input type=\"checkbox\" checked=\"checked\" id='[top]' value='[top]' name='[top]'>[top]</input></li>";
+           for(var i = 0; i < categories.length; i++) {
+               var category = categories[i];
+               if(category.isDirectory) {
+                   document.getElementById("categoriesUl").innerHTML += "<li class=\"list-group-item\"><input type=\"checkbox\" checked=\"checked\" id='" + category.name + "' value='" + category.name + "' name='" + category.name + "'>" + category.name + "</input></li>";
+               }
+           }
+        });
+    }, fail);
+}
+
+
 //
 // END OF FUNCTIONS DECLARATIONS
 //
@@ -129,6 +152,12 @@ var app = {
                 picker_fromAbsolute("file:///"); // Load root of phone's filesystem
             }, fail);
         }
+
+        if(getCallerId() == "index.html" && keyExists("searchPath")) {
+            window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
+            window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function (fileSystem) {getCategories();}, fail);
+        }
+
         //
 
         app.receivedEvent('deviceready');

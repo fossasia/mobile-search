@@ -23,6 +23,10 @@
  SOFTWARE.
  */
 
+//
+// FUNCTIONS DECLARATIONS
+//
+
 var storage = window.localStorage;
 
 function keyExists(key) {
@@ -36,6 +40,65 @@ function getCallerId() { //returns e.g. "index.html" or "dir.html"
 function openUrl(url) {
     window.open(url, "_system");
 }
+
+function fail(e) {
+    window.alert(e.target.error.code);
+}
+
+// Directory picker specific functions
+
+var picker_currDir = null;
+var picker_parrentDir = null;
+
+function picker_fromPath(name) {
+    picker_currDir.getDirectory(name, {create: false}, function(dir){picker_listDir(dir);}, fail);
+}
+
+function picker_fromAbsolute(path) {
+    window.resolveLocalFileSystemURL(path, function(dir){picker_listDir(dir);}, fail);
+}
+
+function picker_listParent() {
+    picker_listDir(picker_parrentDir);
+}
+
+function picker_selectDir() {
+    storage.setItem("searchPath", picker_currDir.toURL());
+    window.location.href = "index.html";
+}
+
+function picker_listDir(dirEntry) {
+    if(!dirEntry.isDirectory) return;
+    document.getElementById("currDir").innerHTML = dirEntry.toURL();
+
+    picker_currDir = dirEntry;
+
+    var dirReader = dirEntry.createReader();
+    dirReader.readEntries(function(rows) {
+        document.getElementById("listDiv").innerHTML  = "<ul class=\"list-group\">";
+        dirEntry.getParent(function(dirName){
+            document.getElementById("listDiv").innerHTML += "<li class=\"list-group-item\"><a onclick='picker_listParent()'>[GO UP]</a></li>";
+            picker_parrentDir = dirName;
+        });
+       for(var i = 0; i < rows.length; i++) {
+           var row = rows[i];
+            if(row.isDirectory) {
+                document.getElementById("listDiv").innerHTML += "<li class=\"list-group-item\"><a onclick=\"picker_fromPath('" + row.name + "')\">" + row.name + "</a></li>";
+            }
+           else if(row.isFile) {
+                document.getElementById("listDiv").innerHTML += "<li class=\"list-group-item\">" + row.name + "</li>";
+            }
+       }
+        document.getElementById('listDiv').innerHTML += "</ul>";
+    });
+
+}
+
+//
+
+//
+// END OF FUNCTIONS DECLARATIONS
+//
 
 var app = {
     initialize: function() {
@@ -58,10 +121,21 @@ var app = {
                 );
             };
         }
+
+        //Code for directory picker - need to be put there (instead of main switch), because of Cordova application architecture
+        if(getCallerId() == "directory_picker.html") {
+            window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
+            window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function (fileSystem) {
+                picker_fromAbsolute("file:///"); // Load root of phone's filesystem
+            }, fail);
+        }
+        //
+
         app.receivedEvent('deviceready');
     },
 
     exitApp: function() {
+      navigator.vibrate(500);
       navigator.app.exitApp();
     },
 
@@ -73,12 +147,18 @@ var app = {
 app.initialize();
 
 switch (getCallerId()) {
-    default:
-
+    case "index.html":
         if(!keyExists("searchPath")) {
             document.getElementById("searchBtn").disabled = true;
             document.getElementById("errorMsg").innerHTML = "Path isn't specified";
             break;
         }
+        else {
+            document.getElementById("dirPath").innerHTML = storage.getItem("searchPath");
+        }
         break;
 }
+
+
+
+

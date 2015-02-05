@@ -71,6 +71,8 @@ function picker_listDir(dirEntry) {
     if(!dirEntry.isDirectory) return;
     document.getElementById("currDir").innerHTML = dirEntry.toURL();
 
+    $('.preload_bg').fadeIn();
+
     picker_currDir = dirEntry;
 
     var dirReader = dirEntry.createReader();
@@ -89,6 +91,7 @@ function picker_listDir(dirEntry) {
                 document.getElementById("listDiv").innerHTML += "<li class=\"list-group-item\">" + row.name + "</li>";
             }
        }
+        $('.preload_bg').fadeOut();
         document.getElementById('listDiv').innerHTML += "</ul>";
     });
 
@@ -102,6 +105,7 @@ function picker_listDir(dirEntry) {
 
 function getCategories() {
     if(!keyExists("searchPath") || getCallerId() != "index.html")return;
+    $('.preload_bg').fadeIn();
     window.resolveLocalFileSystemURL(storage.getItem("searchPath"), function(dirLoc){
         if(!dirLoc.isDirectory)return;
        var catReader = dirLoc.createReader();
@@ -113,6 +117,7 @@ function getCategories() {
                    document.getElementById("categoriesUl").innerHTML += "<li class=\"list-group-item\"><input type=\"checkbox\" checked=\"checked\" id='" + category.name + "' value='" + category.name + "' name='" + category.name + "'>" + category.name + "</input></li>";
                }
            }
+            $('.preload_bg').fadeOut();
         });
     }, fail);
 }
@@ -186,7 +191,3 @@ switch (getCallerId()) {
         }
         break;
 }
-
-
-
-

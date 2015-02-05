@@ -80,6 +80,10 @@ SOFTWARE.
                 <ul class="list-group" id="categoriesUl">
 
                 </ul>
+                <div style="text-align: center; margin: 0 auto">
+                    <input type="button" onclick="$('#categoriesUl input:checkbox').each(function(){$(this).prop('checked', true);});" class="btn btn-default" value="Select all" style="width: 40%" />
+                    <input type="button" onclick="$('#categoriesUl').find('input[type=checkbox]:checked').removeAttr('checked');" class="btn btn-default" value="Deselect all" style="width: 40%" />
+                </div>
             </div>
         </div>
 

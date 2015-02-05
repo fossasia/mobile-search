@@ -122,7 +122,6 @@ function getCategories() {
     }, fail);
 }
 
-
 //
 // END OF FUNCTIONS DECLARATIONS
 //
@@ -168,7 +167,6 @@ var app = {
     },
 
     exitApp: function() {
-      navigator.vibrate(500);
       navigator.app.exitApp();
     },
 
@@ -182,6 +180,7 @@ app.initialize();
 switch (getCallerId()) {
     case "index.html":
         if(!keyExists("searchPath")) {
+            $('.preload_bg').fadeOut();
             document.getElementById("searchBtn").disabled = true;
             document.getElementById("errorMsg").innerHTML = "Path isn't specified";
             break;

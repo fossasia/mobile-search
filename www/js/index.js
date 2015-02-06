@@ -187,6 +187,7 @@ switch (getCallerId()) {
         }
         else {
             document.getElementById("dirPath").innerHTML = storage.getItem("searchPath");
+            document.getElementById("errorMsg").innerHTML = "Phrase length should be longer than 2 and shorter than 65 characters";
         }
         break;
 }

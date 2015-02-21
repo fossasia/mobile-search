@@ -72,7 +72,7 @@ SOFTWARE.
             <div class="row col-md-12">
                 <span style="color: red" id="errorMsg"></span><br/>
                 Search for phrase: <input id="searchP" onkeyup="if($(this).val().length < 3 || $(this).val().length > 64) $('#searchBtn').prop('disabled', true); else $('#searchBtn').prop('disabled', false);" class="form-control" type="text" /><br/>
-                <input type="button" style="width: 100%" class="btn btn-default" value="Search!" onclick="window.location.href = 'search_results.html';" id="searchBtn" disabled="disabled" />
+                <input type="button" style="width: 100%" class="btn btn-default" value="Search!" onclick="search_getCategories();" id="searchBtn" disabled="disabled" />
             </div>
             <hr/>
             <div class="row col-md-12">

@@ -103,6 +103,65 @@ function picker_listDir(dirEntry) {
 //---
 //---
 
+//Search module functions
+
+var curr_categories = [];
+var found_occurs = [];
+
+function search_getCategories() {
+    if(getCallerId() != "index.html" || !keyExists("searchPath")) return;
+    $('.preload_bg').fadeIn();
+    $('#categoriesUl input:checked').each(function() {
+        curr_categories.push($(this).val());
+    });
+    search_folder(storage.getItem("searchPath"));
+}
+
+function search_folder(dirAbsolutePath) {
+    window.resolveLocalFileSystemURL(dirAbsolutePath, function(dirEntry) {
+            if(!dirEntry.isDirectory) return;
+            var dirReader = dirEntry.createReader();
+            if(dirAbsolutePath == storage.getItem("searchPath")) {
+                dirReader.readEntries(function(rows) {
+                    for(var i = 0; i < rows.length; i++) {
+                        var row = rows[i];
+                        if(row.isDirectory) {
+                            if($.inArray(row.name, curr_categories) != -1) search_folder(row.toURL());
+                        }
+                        else if (row.isFile && $.inArray("[top]", curr_categories) != -1) {
+                            search_file(row.toURL());
+                        }
+                    }
+                }, fail);
+            }
+            else {
+                dirReader.readEntries(function(rows) {
+                    for(var i = 0; i < rows.length; i++) {
+                        var row = rows[i];
+                        if(row.isDirectory) search_folder(row.toURL());
+                        else if (row.isFile) search_file(row.toURL());
+                    }
+                }, fail);
+            }
+    }, fail);
+}
+
+function search_file(fileAbsolutePath) {
+    window.resolveLocalFileSystemURL(fileAbsolutePath, function(fileEntry) {
+        if(fileEntry.isDirectory) return;
+        fileEntry.file(function(file) {
+            var fileReader = new FileReader();
+            fileReader.onloadend = function (arg) {
+
+            }
+            fileReader.readAsText(file);
+        });
+    }, fail);
+}
+
+//
+
+
 function getCategories() {
     if(!keyExists("searchPath") || getCallerId() != "index.html")return;
     $('.preload_bg').fadeIn();
